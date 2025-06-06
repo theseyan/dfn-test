@@ -25,10 +25,11 @@ def process_wav_files(samples_dir, output_dir):
         input_path = os.path.join(samples_dir, wav_file)
         output_path = os.path.join(output_dir, wav_file)
 
+        audio, _ = load_audio(input_path, sr=df_state.sr())
+        
         print(f"Processing '{wav_file}'...")
         start_time = time.time()
 
-        audio, _ = load_audio(input_path, sr=df_state.sr())
         num_samples = audio.shape[-1] if hasattr(audio, "shape") else len(audio)
         duration_sec = num_samples / df_state.sr()
         enhanced = enhance(model, df_state, audio)
